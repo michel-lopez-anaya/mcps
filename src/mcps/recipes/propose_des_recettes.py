@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Module providing the propose_des_recettes function."""
 import os
-from recipes.recipe_manager import SQLiteRecipeManager
-from recipes.database_manager import SQLiteDatabaseManager
+from mcps.recipes.recipe_manager import SQLiteRecipeManager
+from mcps.recipes.database_manager import SQLiteDatabaseManager
 
 
 def propose_des_recettes(source: str, quantite: int) -> str:

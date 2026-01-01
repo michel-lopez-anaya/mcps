@@ -7,7 +7,7 @@ import subprocess
 from typing import Dict
 
 SCRIPT_PATH = Path(f"{os.path.dirname(os.path.abspath(__file__))}")
-SCRIPT_PATH = SCRIPT_PATH.parent.parent
+SCRIPT_PATH = SCRIPT_PATH.parent.parent.parent
 SCRIPT_PATH = SCRIPT_PATH / "scripts"
  
 def _run_jsonise() -> Dict:

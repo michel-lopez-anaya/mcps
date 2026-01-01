@@ -13,14 +13,14 @@ import sys
 from typing import Any
 
 # Import helper functions from dedicated modules
-from email_processing.run_jsonise import _run_jsonise
-from email_processing.synthetise_texte import PROMPT_SYNTHESE
+from mcps.email_processing.run_jsonise import _run_jsonise
+from mcps.email_processing.synthetise_texte import PROMPT_SYNTHESE
 
-from recipes.marque_recette_faite import marque_recette_faite
-from recipes.propose_des_recettes import propose_des_recettes
-from recipes.gourmandise_recette import PROMPT_GOURMAND
+from mcps.recipes.marque_recette_faite import marque_recette_faite
+from mcps.recipes.propose_des_recettes import propose_des_recettes
+from mcps.recipes.gourmandise_recette import PROMPT_GOURMAND
 
-from utils.send_clipboard import recuperer_texte_du_presse_papier
+from mcps.utils.send_clipboard import recuperer_texte_du_presse_papier
 
 SCRIPT_PATH = "${BIN_DIR}"
 

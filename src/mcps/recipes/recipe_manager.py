@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Module providing the RecipeManager interface and its implementation."""
 from typing import List, Optional
-from recipes.database_manager import DatabaseManager
+from mcps.recipes.database_manager import DatabaseManager
 
 
 class RecipeManager:
