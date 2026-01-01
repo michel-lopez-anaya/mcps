@@ -1,0 +1,16 @@
+LICENSE
+README.md
+setup.py
+src/email_processing/__init__.py
+src/email_processing/mail_to_json.py
+src/email_processing/run_jsonise.py
+src/mcp_server/__init__.py
+src/mcp_server/mcp_perso.py
+src/mcps.egg-info/PKG-INFO
+src/mcps.egg-info/SOURCES.txt
+src/mcps.egg-info/dependency_links.txt
+src/mcps.egg-info/top_level.txt
+src/recipes/__init__.py
+src/recipes/marque_recette_faite.py
+src/recipes/propose_des_recettes.py
+src/scripts/__init__.py

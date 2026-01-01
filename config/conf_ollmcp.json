@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "perso": {
+      "command": "/home/michel/.local/bin/mcp_perso.py",
+      "args": [
+        "/home/michel/Desktop/"
+      ],
+      "env": {
+        "PATH": "/bin:/usr/bin:/usr/local/bin",
+        "NODE_PATH": "/usr/bin:/usr/share/node_modules"
+      }
+    }
+  }
+}
