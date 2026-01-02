@@ -7,36 +7,36 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 ```
 .
 ├── config/
-│   └── mcp_persorc          # Fichier de configuration pour les scripts
+│   ├── conf_ollmcp.json     # Configuration pour le serveur MCP
+│   └── config.yaml          # Fichier de configuration principal
 ├── scripts/
-│   ├── jsonise.sh           # Script shell pour traiter les emails
 │   └── mail_to_json.py      # Script Python pour convertir les emails en JSON
 ├── src/
 │   └── mcps/
 │       ├── email_processing/
-│       │   ├── run_jsonise.py         # Exécute le script jsonise.sh
-│       │   └── synthetise_texte.py    # Contexte pour la synthèse de texte
+│       │   ├── jsonise.py          # Module pour traiter les emails
+│       │   └── synthetise_texte.py # Contexte pour la synthèse de texte
 │       ├── mcp_server/
-│       │   └── mcp_perso.py          # Serveur MCP principal
+│       │   └── mcp_perso.py       # Serveur MCP principal
 │       ├── recipes/
-│       │   ├── database_manager.py    # Gestion de la base de données SQLite
-│       │   ├── gourmandise_recette.py  # Contexte pour convertir des recettes
+│       │   ├── database_manager.py # Gestion de la base de données SQLite
+│       │   ├── gourmandise_recette.py # Contexte pour convertir des recettes
 │       │   ├── marque_recette_faite.py # Met à jour la date de réalisation d'une recette
 │       │   ├── propose_des_recettes.py # Propose des recettes
-│       │   └── recipe_manager.py      # Gestion des recettes
+│       │   └── recipe_manager.py   # Gestion des recettes
 │       └── utils/
-│           └── send_clipboard.py     # Utilitaires pour le presse-papiers
+│           └── send_clipboard.py  # Utilitaires pour le presse-papiers
 ├── README.md                 # Documentation du projet
-└── requirements.txt         # Dépendances Python
+├── requirements.txt         # Dépendances Python
+└── todo.md                  # Liste des tâches et améliorations
 ```
 
 ## Fonctionnalités
 
 ### 1. Gestion des Emails
-- **`jsonise.sh`** : Script shell qui exécute `mail_to_json.py` pour convertir les emails en format JSON.
-- **`mail_to_json.py`** : Script Python qui nettoie et extrait le contenu des emails (HTML et texte brut), gère les pièces jointes et les métadonnées.
-- **`run_jsonise.py`** : Module utilisé par le serveur MCP pour exécuter `jsonise.sh` et retourner son output.
+- **`jsonise.py`** : Module Python qui nettoie et extrait le contenu des emails (HTML et texte brut), gère les pièces jointes et les métadonnées.
 - **`synthetise_texte.py`** : Contexte pour réaliser des synthèses de textes.
+- **`mail_to_json.py`** : Script Python qui convertit les emails en format JSON.
 
 ### 2. Gestion des Recettes
 - **`database_manager.py`** : Interface et implémentation pour la gestion de la base de données SQLite.
@@ -48,7 +48,7 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 ### 3. Serveur MCP
 - **`mcp_perso.py`** : Serveur MCP principal qui fournit les outils suivants :
   - **`calcul`** : Additionne deux nombres.
-  - **`resume_emails`** : Exécute `jsonise.sh` et résume les emails.
+  - **`resume_emails`** : Exécute le script `mail_to_json.py` et résume les emails.
   - **`marque_recette_faite`** : Met à jour la date de réalisation d'une recette.
   - **`propose_des_recettes`** : Propose des recettes.
   - **`prepare_synthese`** : Établit un contexte pour réaliser des synthèses de textes.
@@ -68,7 +68,7 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
    ```
 
 3. Configurez les fichiers de configuration :
-   - Modifiez `config/mcp_persorc` selon vos besoins.
+   - Modifiez `config/config.yaml` selon vos besoins.
 
 4. Exécutez le serveur MCP :
    ```bash
@@ -81,4 +81,4 @@ Les contributions sont les bienvenues. Veuillez ouvrir une issue ou soumettre un
 
 ## Licence
 
-Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier `LICENCE` pour plus de détails.
