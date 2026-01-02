@@ -1,65 +1,84 @@
- ## Description des fichiers
+# Projet MCP (Multi-Tool Controller for Personal Tasks)
 
- ### `conf_ollmcp.json` Fichier de configuration pour le serveur MCP. Il
- définit le chemin et les arguments pour exécuter `mcp_perso.py`
- et spécifie les variables d'environnement nécessaires.
+Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des tâches quotidiennes, notamment la gestion des emails et des recettes culinaires. Il utilise une architecture modulaire et une communication via JSON-RPC 2.0.
 
- ### `jsonise.sh` Script shell pour traiter les emails. Il récupère
- le répertoire absolu du script, vérifie l'existence des répertoires
- `Mail` et `Desktop`, et exécute `mail_to_json.py` pour convertir les
- emails en JSON.
+## Structure du Projet
 
- ### `mail_to_json.py` Script Python pour convertir les emails en format
- JSON. Il nettoie et extrait le contenu des emails (HTML et texte brut)
- et gère les pièces jointes et les métadonnées des emails.
+```
+.
+├── config/
+│   └── mcp_persorc          # Fichier de configuration pour les scripts
+├── scripts/
+│   ├── jsonise.sh           # Script shell pour traiter les emails
+│   └── mail_to_json.py      # Script Python pour convertir les emails en JSON
+├── src/
+│   └── mcps/
+│       ├── email_processing/
+│       │   ├── run_jsonise.py         # Exécute le script jsonise.sh
+│       │   └── synthetise_texte.py    # Contexte pour la synthèse de texte
+│       ├── mcp_server/
+│       │   └── mcp_perso.py          # Serveur MCP principal
+│       ├── recipes/
+│       │   ├── database_manager.py    # Gestion de la base de données SQLite
+│       │   ├── gourmandise_recette.py  # Contexte pour convertir des recettes
+│       │   ├── marque_recette_faite.py # Met à jour la date de réalisation d'une recette
+│       │   ├── propose_des_recettes.py # Propose des recettes
+│       │   └── recipe_manager.py      # Gestion des recettes
+│       └── utils/
+│           └── send_clipboard.py     # Utilitaires pour le presse-papiers
+├── README.md                 # Documentation du projet
+└── requirements.txt         # Dépendances Python
+```
 
- ### `mcp_perso.py` Serveur MCP pour les tâches quotidiennes. Il fournit
- deux outils : - `calcul` : Additionne deux nombres.  - `resume_emails`
- : Exécute `jsonise.sh` et résume les emails.  La communication se
- fait via JSON-RPC 2.0.
+## Fonctionnalités
 
- ### `mcp_persorc` Fichier de configuration pour le serveur MCP. Il
- contient les paramètres spécifiques à l'environnement.
+### 1. Gestion des Emails
+- **`jsonise.sh`** : Script shell qui exécute `mail_to_json.py` pour convertir les emails en format JSON.
+- **`mail_to_json.py`** : Script Python qui nettoie et extrait le contenu des emails (HTML et texte brut), gère les pièces jointes et les métadonnées.
+- **`run_jsonise.py`** : Module utilisé par le serveur MCP pour exécuter `jsonise.sh` et retourner son output.
+- **`synthetise_texte.py`** : Contexte pour réaliser des synthèses de textes.
 
- ## Suggestions d'amélioration
+### 2. Gestion des Recettes
+- **`database_manager.py`** : Interface et implémentation pour la gestion de la base de données SQLite.
+- **`recipe_manager.py`** : Interface et implémentation pour la gestion des recettes.
+- **`marque_recette_faite.py`** : Met à jour la date de réalisation d'une recette.
+- **`propose_des_recettes.py`** : Propose un nombre défini de recettes à partir d'une source donnée.
+- **`gourmandise_recette.py`** : Contexte pour convertir des recettes au format gourmand.
 
- 1. **Documentation** :
-    - Ajouter un fichier `README.md` pour expliquer l'utilisation des
-    scripts et leur
- configuration.
+### 3. Serveur MCP
+- **`mcp_perso.py`** : Serveur MCP principal qui fournit les outils suivants :
+  - **`calcul`** : Additionne deux nombres.
+  - **`resume_emails`** : Exécute `jsonise.sh` et résume les emails.
+  - **`marque_recette_faite`** : Met à jour la date de réalisation d'une recette.
+  - **`propose_des_recettes`** : Propose des recettes.
+  - **`prepare_synthese`** : Établit un contexte pour réaliser des synthèses de textes.
+  - **`gourmandise_recette`** : Établit un contexte pour convertir des recettes au format gourmand.
 
- 2. **Gestion des erreurs** :
-    - Améliorer la gestion des erreurs dans `jsonise.sh` et
-    `mail_to_json.py` pour une
- meilleure robustesse.
+## Installation
 
- 3. **Tests** :
-    - Ajouter des tests unitaires pour `mail_to_json.py` et
-    `mcp_perso.py`.
+1. Clonez ce dépôt sur votre machine locale :
+   ```bash
+   git clone https://github.com/votre-utilisateur/mcps.git
+   cd mcps
+   ```
 
- 4. **Configuration** :
-    - Centraliser les chemins et configurations dans un fichier unique
-    pour faciliter
- la maintenance.
+2. Installez les dépendances nécessaires :
+   ```bash
+   pip install -r requirements.txt
+   ```
 
- 5. **Licence** :
-    - Ajouter un fichier `LICENSE` pour clarifier les droits
-    d'utilisation.
+3. Configurez les fichiers de configuration :
+   - Modifiez `config/mcp_persorc` selon vos besoins.
 
- ## Installation et utilisation
+4. Exécutez le serveur MCP :
+   ```bash
+   python src/mcps/mcp_server/mcp_perso.py
+   ```
 
- 1. Clonez ce dépôt sur votre machine locale.  2. Assurez-vous
- que les dépendances nécessaires sont installées (Python, etc.).
- 3. Configurez les fichiers de configuration (`conf_ollmcp.json` et
- `mcp_persorc`) selon vos besoins.  4. Exécutez le serveur MCP en
- utilisant la commande appropriée.
+## Contribution
 
- ## Contribution
+Les contributions sont les bienvenues. Veuillez ouvrir une issue ou soumettre une pull request pour toute amélioration ou correction de bug.
 
- Les contributions sont les bienvenues. Veuillez ouvrir une issue ou
- soumettre une pull request pour toute amélioration ou correction de bug.
+## Licence
 
- ## Licence
-
- Ce projet est sous licence [MIT](LICENSE). Voir le fichier `LICENSE`
- pour plus de détails.
+Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.

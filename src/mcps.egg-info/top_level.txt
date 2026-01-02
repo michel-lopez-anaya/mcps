@@ -1,4 +1,1 @@
-email_processing
-mcp_server
-recipes
-scripts
+mcps

@@ -1,20 +1,23 @@
 #!/usr/bin/env python3
 """Module providing the RecipeManager interface and its implementation."""
 from typing import List, Optional
+from abc import ABC, abstractmethod
 from mcps.recipes.database_manager import DatabaseManager
 
 
 class RecipeManager:
     """Interface pour la gestion des recettes."""
-
+    @abstractmethod
     def update_recipe(self, titre: str, description: str) -> Optional[str]:
         """Met à jour la description d'une recette."""
         pass
 
+    @abstractmethod
     def get_recipe(self, titre: str) -> Optional[str]:
         """Récupère une recette par son titre."""
         pass
 
+    @abstractmethod
     def search_recipes(self, source: str, quantite: int) -> List[str]:
         """Recherche des recettes par source et retourne une liste de résultats."""
         pass

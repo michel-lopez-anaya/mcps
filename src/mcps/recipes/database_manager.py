@@ -1,24 +1,28 @@
 #!/usr/bin/env python3
 """Module providing the DatabaseManager interface and its implementation."""
 from typing import List, Optional, Any
+from abc import ABC, abstractmethod
 import sqlite3
 
 
 class DatabaseManager:
     """Interface pour la gestion de la base de données."""
-
+    @abstractmethod
     def connect(self) -> bool:
         """Établit une connexion à la base de données."""
-        pass
+        pass 
 
-    def execute_query(self, query: str, params: tuple = None) -> List[Any]:
+    @abstractmethod
+    def execute_query(self, query: str, params: tuple = ()) -> List[Any]:
         """Exécute une requête SQL et retourne les résultats."""
         pass
 
+    @abstractmethod
     def commit(self) -> None:
         """Valide les changements dans la base de données."""
         pass
 
+    @abstractmethod
     def close(self) -> None:
         """Fermer la connexion à la base de données."""
         pass
@@ -40,7 +44,7 @@ class SQLiteDatabaseManager(DatabaseManager):
             print(f"Erreur lors de la connexion à la base de données: {e}")
             return False
 
-    def execute_query(self, query: str, params: tuple = None) -> List[Any]:
+    def execute_query(self, query: str, params: tuple = ()) -> List[Any]:
         """Exécute une requête SQL et retourne les résultats."""
         if not self.conn:
             raise Exception("Aucune connexion à la base de données.")

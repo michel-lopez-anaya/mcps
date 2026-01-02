@@ -1,11 +1,15 @@
 {
   "mcpServers": {
     "perso": {
-      "command": "/home/michel/.local/bin/mcp_perso.py",
+      "command": "/home/michel/.venv/bin/python3",
       "args": [
+        "-m",
+        "mcps.mcp_server.mcp_perso",
         "/home/michel/Desktop/"
       ],
       "env": {
+        "DISPLAY": ":1",
+        "XAUTHORITY": "/home/michel/.Xauthority",
         "PATH": "/bin:/usr/bin:/usr/local/bin",
         "NODE_PATH": "/usr/bin:/usr/share/node_modules"
       }
