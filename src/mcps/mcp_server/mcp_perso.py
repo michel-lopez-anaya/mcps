@@ -13,7 +13,7 @@ import sys
 from typing import Any
 
 # Import helper functions from dedicated modules
-from mcps.email_processing.run_jsonise import _run_jsonise
+from mcps.email_processing.jsonise import run_jsonise
 from mcps.email_processing.synthetise_texte import PROMPT_SYNTHESE
 
 from mcps.recipes.marque_recette_faite import marque_recette_faite
@@ -115,7 +115,7 @@ def handle_call_tool(request_id: str, params: dict) -> None:
             "result": {"content": [{"type": "text", "text": f"Le résultat de {a} + {b} = {resultat}"}]}
         })
     elif tool_name == "resume_emails":
-        result = _run_jsonise()
+        result = run_jsonise()
         send_message({
             "jsonrpc": "2.0",
             "id": request_id,
