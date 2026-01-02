@@ -7,7 +7,7 @@ src/mcps.egg-info/SOURCES.txt
 src/mcps.egg-info/dependency_links.txt
 src/mcps.egg-info/top_level.txt
 src/mcps/email_processing/__init__.py
-src/mcps/email_processing/run_jsonise.py
+src/mcps/email_processing/jsonise.py
 src/mcps/email_processing/synthetise_texte.py
 src/mcps/mcp_server/__init__.py
 src/mcps/mcp_server/mcp_perso.py

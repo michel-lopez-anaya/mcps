@@ -61,7 +61,7 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "resume_emails",
-                    "description": "Lit les emails et renvoie un prompt pour le résumé.",
+                    "description": "Lit les emails et résume chacun des emails qui suivent en 80 mots maximum.",
                     "inputSchema": {"type": "object", "properties": {}, "required": []}
                 },
                 {

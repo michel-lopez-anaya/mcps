@@ -10,7 +10,6 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 │   ├── conf_ollmcp.json     # Configuration pour le serveur MCP
 │   └── config.yaml          # Fichier de configuration principal
 ├── scripts/
-│   └── mail_to_json.py      # Script Python pour convertir les emails en JSON
 ├── src/
 │   └── mcps/
 │       ├── email_processing/
@@ -36,7 +35,6 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 ### 1. Gestion des Emails
 - **`jsonise.py`** : Module Python qui nettoie et extrait le contenu des emails (HTML et texte brut), gère les pièces jointes et les métadonnées.
 - **`synthetise_texte.py`** : Contexte pour réaliser des synthèses de textes.
-- **`mail_to_json.py`** : Script Python qui convertit les emails en format JSON.
 
 ### 2. Gestion des Recettes
 - **`database_manager.py`** : Interface et implémentation pour la gestion de la base de données SQLite.
@@ -60,6 +58,10 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
    ```bash
    git clone https://github.com/votre-utilisateur/mcps.git
    cd mcps
+   créer un environnement virtuel pour ce projet
+   python3 -m venv ~/.venv
+   activer l’environnement 
+   source ~/.venv/bin/activate
    ```
 
 2. Installez les dépendances nécessaires :
@@ -72,7 +74,8 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 
 4. Exécutez le serveur MCP :
    ```bash
-   python src/mcps/mcp_server/mcp_perso.py
+   copier la configuration du serveur dans "conf_ollmcp.json" dans la configuration des serveurs de ollmcp, gemini cli, etc
+   lancer ollmcp, gemini cli, etc
    ```
 
 ## Contribution

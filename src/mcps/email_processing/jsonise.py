@@ -5,14 +5,9 @@ import yaml
 import json
 import os
 import sys
-import logging
 import re
 from lxml import html as lxml_html
 from lxml.html.clean import Cleaner
-
-
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
-
 
 def clean_message(message):
     # -------------------------------------------------
@@ -23,7 +18,6 @@ def clean_message(message):
         charset = message.get_content_charset() or "utf-8"
         html_text = payload_bytes.decode(charset, errors="replace")
     except Exception:
-        logging.info(payload_bytes)
         return ""
 
     # -------------------------------------------------
@@ -86,7 +80,6 @@ def extract_body(message):
     :param message: the parsed email message
     :return: text body
     """
-    logging.info("Nouveau message")
     # Base case – if this is a leaf node
     if not message.is_multipart():
         if message.get_content_type() == "text/plain":
@@ -94,7 +87,6 @@ def extract_body(message):
             charset = message.get_content_charset() or "utf-8"
             return payload.decode(charset, errors="replace")
         if message.get_content_type() == "text/html":
-            logging.info("appel leaf")
             clean_message(message)
 
     # Recursive case – walk the children
@@ -104,10 +96,9 @@ def extract_body(message):
                 payload = part.get_payload(decode=True)
                 charset = part.get_content_charset() or "utf-8"
                 return payload.decode(charset, errors="replace")
-            if part.get_content_type() == "text/html":
-                logging.info("appel multipart")
+            #if part.get_content_type() == "text/html":
+            #   logging.info("appel multipart")
                 # clean_message(message)
-
     return ""
 
 
