@@ -1,0 +1,2 @@
+database:
+  path: "/home/courses/.local/share/gourmand/recipes.db"

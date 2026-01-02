@@ -14,13 +14,7 @@
      SCRIPT_PATH = SCRIPT_PATH / "scripts"
      ```
 
-3. **Chemin du script dans `mcp_perso.py`** :
-   - Dans `mcp_perso.py`, le chemin du script est défini en dur :
-     ```python
-     SCRIPT_PATH = "${BIN_DIR}"
-     ```
-
-4. **Variables d'environnement dans `conf_ollmcp.json`** :
+3. **Variables d'environnement dans `conf_ollmcp.json`** :
    - Dans `conf_ollmcp.json`, les variables d'environnement sont définies en dur :
      ```json
      "env": {
@@ -43,7 +37,6 @@ database:
 
 scripts:
   jsonise_script: "scripts/jsonise.sh"
-  bin_dir: "/home/michel/Desktop/"
 
 environment:
   DISPLAY: ":1"

@@ -22,8 +22,6 @@ from mcps.recipes.gourmandise_recette import PROMPT_GOURMAND
 
 from mcps.utils.send_clipboard import recuperer_texte_du_presse_papier
 
-SCRIPT_PATH = "${BIN_DIR}"
-
 def send_message(msg: dict[str, Any]) -> None:
     """Envoie un message JSON au client via stdout."""
     json.dump(msg, sys.stdout)
