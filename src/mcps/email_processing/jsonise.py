@@ -87,7 +87,7 @@ def extract_body(message):
             charset = message.get_content_charset() or "utf-8"
             return payload.decode(charset, errors="replace")
         if message.get_content_type() == "text/html":
-            clean_message(message)
+            return clean_message(message)
 
     # Recursive case – walk the children
     for part in message.walk():
@@ -96,9 +96,8 @@ def extract_body(message):
                 payload = part.get_payload(decode=True)
                 charset = part.get_content_charset() or "utf-8"
                 return payload.decode(charset, errors="replace")
-            #if part.get_content_type() == "text/html":
-            #   logging.info("appel multipart")
-                # clean_message(message)
+            if part.get_content_type() == "text/html":
+               return clean_message(message)
     return ""
 
 
@@ -134,6 +133,8 @@ def process_email(message):
     body_raw = extract_body(message)
     body_clean = clean_body(body_raw)
     body_clean = re.sub(r'(?<!\S)[^\s]{' + str(15 + 1) + r',}(?!\S)', '', body_clean)
+    # Remove multiple spaces left by long word removal
+    body_clean = re.sub(r'  +', ' ', body_clean)
 
     out = {
         "from": message.get("From"),
@@ -154,12 +155,11 @@ def load_config():
     # config_path = "/home/michel/Desktop/mcps/config/config.yaml"
 
     if not os.path.isfile(config_path):
-        print(f"Erreur : config non trouvée à {config_path}")
-        sys.exit(1)
-    
+        return None
+
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
-    
+
     return config
 
 
@@ -177,7 +177,7 @@ def process_mbox(mbox_path):
 
 def run_jsonise() -> dict:
     """Execute le processus de jsonise et retourne son output.
-    
+
     Returns
     -------
     dict
@@ -185,30 +185,33 @@ def run_jsonise() -> dict:
     """
     try:
         config = load_config()
-        
+
+        if config is None:
+            return {"error": "script not found"}
+
         if "mbox" not in config or "SRC" not in config["mbox"] or "path" not in config["mbox"]:
             return {"error": "SRC ou path non défini dans la configuration"}
-        
+
         mbox_path = config["mbox"]["path"]
-        
+
         # Capture l'output de process_mbox
         from io import StringIO
         import sys
-        
+
         # Redirige stdout pour capturer l'output
         old_stdout = sys.stdout
         sys.stdout = captured_output = StringIO()
-        
+
         process_mbox(mbox_path)
-        
+
         # Rétablit stdout
         sys.stdout = old_stdout
-        
+
         prompt = "écrit un résumé de 80 mots pour chacun des emails qui suivent : "
         output = captured_output.getvalue().strip()
         combined = f"{prompt}\n{output}" if output else prompt
-        
+
         return {"output": combined}
-        
+
     except Exception as exc:
         return {"error": f"exécution échouée : {exc}"}

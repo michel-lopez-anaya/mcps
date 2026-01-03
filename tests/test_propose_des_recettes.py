@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 # Add the src directory to the path so we can import the modules
 sys.path.insert(0, 'src')
 
-from recipes.propose_des_recettes import propose_des_recettes
+from mcps.recipes.propose_des_recettes import propose_des_recettes
 
 
 def test_propose_des_recettes_success():
@@ -23,9 +23,9 @@ def test_propose_des_recettes_success():
     ]
     
     # Patch the imports
-    with patch('recipes.propose_des_recettes.SQLiteDatabaseManager', return_value=mock_db_manager), \
-         patch('recipes.propose_des_recettes.SQLiteRecipeManager', return_value=mock_recipe_manager), \
-         patch('recipes.propose_des_recettes.os.path.expanduser', return_value='/mock/path/recipes.db'):
+    with patch('mcps.recipes.propose_des_recettes.SQLiteDatabaseManager', return_value=mock_db_manager), \
+         patch('mcps.recipes.propose_des_recettes.SQLiteRecipeManager', return_value=mock_recipe_manager), \
+         patch('mcps.recipes.propose_des_recettes.os.path.expanduser', return_value='/mock/path/recipes.db'):
         
         result = propose_des_recettes("Test Source", 2)
         
@@ -48,8 +48,8 @@ def test_propose_des_recettes_db_connection_failure():
     mock_db_manager.connect.return_value = False
     
     # Patch the imports
-    with patch('recipes.propose_des_recettes.SQLiteDatabaseManager', return_value=mock_db_manager), \
-         patch('recipes.propose_des_recettes.os.path.expanduser', return_value='/mock/path/recipes.db'):
+    with patch('mcps.recipes.propose_des_recettes.SQLiteDatabaseManager', return_value=mock_db_manager), \
+         patch('mcps.recipes.propose_des_recettes.os.path.expanduser', return_value='/mock/path/recipes.db'):
         
         result = propose_des_recettes("Test Source", 2)
         

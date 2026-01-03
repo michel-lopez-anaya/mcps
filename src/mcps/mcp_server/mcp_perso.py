@@ -87,12 +87,12 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "prepare_synthese",
-                    "description": f"Établit un contexte pour réaliser des synthèses de textes. {PROMPT_SYNTHESE}",
+                    "description": f"Réalise, prépare, fait, écrit des synthèses de textes. {PROMPT_SYNTHESE}",
                     "inputSchema": {"type": "object", "properties": {}, "required": []}
                 },
                 {
                     "name": "gourmandise_recette",
-                    "description": f"Établit un contexte pour convertir des recettes au format gourmand. {PROMPT_GOURMAND}",
+                    "description": f"Convertis, encode, prépare des recettes au format gourmand. {PROMPT_GOURMAND}",
                     "inputSchema": {"type": "object", "properties": {}, "required": []}
                 }
 

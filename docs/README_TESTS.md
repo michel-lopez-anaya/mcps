@@ -1,16 +1,28 @@
-# Tests d'Intégration
+# Tests Unitaires et d'Intégration
 
-Ce répertoire contient les tests d'intégration pour l'application MCP Personnelle.
+Ce répertoire contient les tests pour l'application MCP Personnelle.
 
 ## Structure des Tests
 
-### Tests Unitaires (existant)
-- `test_mail_to_json.py` - Tests unitaires pour le traitement des emails
-- `test_database_manager.py` - Tests unitaires pour le gestionnaire de base de données
-- `test_recipe_manager.py` - Tests unitaires pour le gestionnaire de recettes
-- `test_marque_recette_faite.py` - Tests unitaires pour le marquage de recettes
-- `test_propose_des_recettes.py` - Tests unitaires pour la proposition de recettes
-- `test_mcp_perso.py` - Tests unitaires pour le serveur MCP
+### Tests Unitaires (33 tests)
+- `test_jsonise.py` - Tests unitaires pour le traitement des emails (20 tests)
+  - Utilise unittest.TestCase avec des méthodes de test complètes
+  - Couvre le nettoyage HTML, l'extraction de corps, la détection de pièces jointes, etc.
+
+- `test_database_manager.py` - Tests unitaires pour le gestionnaire de base de données (2 tests)
+  - Tests de connexion et d'exécution de requêtes
+
+- `test_recipe_manager.py` - Tests unitaires pour le gestionnaire de recettes (2 tests)
+  - Tests de mise à jour et de recherche de recettes
+
+- `test_marque_recette_faite.py` - Tests unitaires pour le marquage de recettes (2 tests)
+  - Tests de succès et de gestion des erreurs de connexion
+
+- `test_propose_des_recettes.py` - Tests unitaires pour la proposition de recettes (2 tests)
+  - Tests de succès et de gestion des erreurs de connexion
+
+- `test_mcp_perso.py` - Tests unitaires pour le serveur MCP (2 tests)
+  - Tests d'initialisation et de liste des outils
 
 ### Tests d'Intégration (nouveau)
 - `test_integration.py` - Tests d'intégration complets couvrant :
@@ -114,6 +126,46 @@ Les tests nécessitent les packages suivants (voir `test-requirements.txt`) :
 
 ## Résultats Attendus
 
+### Tests Unitaires
+```
+tests/test_database_manager.py::test_sqlite_database_manager_connect_success PASSED
+tests/test_database_manager.py::test_sqlite_database_manager_execute_query PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_collapses_blank_lines PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_empty_string PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_only_quotes PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_only_signature PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_removes_quotes PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_body_removes_signature PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_message_with_encoding_issues PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_message_with_invalid_html PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_clean_message_with_valid_html PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_extract_body_html_text PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_extract_body_multipart PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_extract_body_plain_text PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_has_attachment_with_attachment PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_has_attachment_without_attachment PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_load_config_not_found PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_load_config_success PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_process_email_basic PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_process_email_with_long_words PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_process_mbox PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_process_mbox_not_found PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_run_jsonise_config_error PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_run_jsonise_missing_config_values PASSED
+tests/test_jsonise.py::TestEmailProcessing::test_run_jsonise_success PASSED
+tests/test_marque_recette_faite.py::test_marque_recette_faite_success PASSED
+tests/test_marque_recette_faite.py::test_marque_recette_faite_db_connection_failure PASSED
+tests/test_mcp_perso.py::test_handle_initialize PASSED
+tests/test_mcp_perso.py::test_handle_list_tools PASSED
+tests/test_propose_des_recettes.py::test_propose_des_recettes_success PASSED
+tests/test_propose_des_recettes.py::test_propose_des_recettes_db_connection_failure PASSED
+tests/test_recipe_manager.py::test_sqlite_recipe_manager_update_recipe PASSED
+tests/test_recipe_manager.py::test_sqlite_recipe_manager_search_recipes PASSED
+
+======================== 33 passed, 19 deselected in 0.17s =========================
+```
+
+### Tests d'Intégration
 Les tests d'intégration valident :
 - ✅ L'intégration correcte entre les modules
 - ✅ Le fonctionnement des workflows complets

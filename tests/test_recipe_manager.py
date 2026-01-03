@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 # Add the src directory to the path so we can import the modules
 sys.path.insert(0, 'src')
 
-from recipes.recipe_manager import SQLiteRecipeManager
+from mcps.recipes.recipe_manager import SQLiteRecipeManager
 
 
 def test_sqlite_recipe_manager_update_recipe():

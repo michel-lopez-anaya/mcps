@@ -17,7 +17,7 @@ Les tests d'intégration valident le fonctionnement correct des interactions ent
 
 ```
 ┌─────────────────┐
-│  mail_to_json   │
+│    jsonise      │
 └────────┬────────┘
          │
          ▼
@@ -27,13 +27,13 @@ Les tests d'intégration valident le fonctionnement correct des interactions ent
          │
          ▼
 ┌─────────────────┐
-│  mcp_perso      │
+│    mcp_perso    │
 └─────────────────┘
 ```
 
 ## 📦 Modules Testés
 
-### 1. `mail_to_json.py`
+### 1. `jsonise.py`
 **Responsabilité** : Conversion des emails en format JSON
 
 **Tests d'intégration** :
@@ -148,20 +148,32 @@ pytest tests/ --cov=src --cov-report=html
 ```
 tests/test_integration.py::TestDatabaseIntegration::test_database_connection_and_query PASSED
 tests/test_integration.py::TestRecipeManagerIntegration::test_full_recipe_update_workflow PASSED
+tests/test_integration.py::TestRecipeManagerIntegration::test_full_recipe_search_workflow PASSED
+tests/test_integration.py::TestRecipeManagerIntegration::test_error_handling_workflow PASSED
 tests/test_integration.py::TestMarqueRecetteFaiteIntegration::test_mark_recipe_as_done_integration PASSED
+tests/test_integration.py::TestMarqueRecetteFaiteIntegration::test_mark_nonexistent_recipe PASSED
 tests/test_integration.py::TestProposeDesRecettesIntegration::test_propose_recipes_integration PASSED
+tests/test_integration.py::TestProposeDesRecettesIntegration::test_propose_recipes_with_limit PASSED
+tests/test_integration.py::TestProposeDesRecettesIntegration::test_propose_recipes_no_results PASSED
 tests/test_integration.py::TestMailToJSONIntegration::test_full_email_processing_workflow PASSED
+tests/test_integration.py::TestMailToJSONIntegration::test_html_email_processing PASSED
+tests/test_integration.py::TestMailToJSONIntegration::test_email_attachment_detection PASSED
+tests/test_integration.py::TestMailToJSONIntegration::test_email_without_attachment PASSED
 tests/test_integration.py::TestMCPFullIntegration::test_mcp_calcul_integration PASSED
+tests/test_integration.py::TestMCPFullIntegration::test_mcp_marque_recette_faite_integration PASSED
+tests/test_integration.py::TestMCPFullIntegration::test_mcp_propose_des_recettes_integration PASSED
+tests/test_integration.py::TestMCPFullIntegration::test_mcp_initialization_sequence PASSED
 tests/test_integration.py::TestEndToEndWorkflow::test_complete_recipe_lifecycle PASSED
+tests/test_integration.py::TestEndToEndWorkflow::test_mcp_server_full_workflow PASSED
 
-======================== 28 passed in 2.45s =========================
+======================== 19 passed in 1.72s =========================
 ```
 
 ### Couverture de Code
 ```
 Name                                             Stmts   Miss  Cover   Missing
 ------------------------------------------------------------------------------
-src/email_processing/mail_to_json.py                 89      0   100%
+src/email_processing/jsonise.py                      89      0   100%
 src/recipes/database_manager.py                      22      0   100%
 src/recipes/recipe_manager.py                        32      0   100%
 src/recipes/marque_recette_faite.py                  17      0   100%
@@ -239,4 +251,4 @@ class TestExempleIntegration:
 
 ---
 
-**Dernière mise à jour** : 2024-01-15
+**Dernière mise à jour** : 2026-01-03

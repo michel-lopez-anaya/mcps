@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 # Add the src directory to the path so we can import the modules
 sys.path.insert(0, 'src')
 
-from recipes.database_manager import SQLiteDatabaseManager
+from mcps.recipes.database_manager import SQLiteDatabaseManager
 
 
 def test_sqlite_database_manager_connect_success():
@@ -14,7 +14,7 @@ def test_sqlite_database_manager_connect_success():
     # Mock sqlite3 connection
     mock_conn = MagicMock()
     
-    with patch('recipes.database_manager.sqlite3.connect', return_value=mock_conn):
+    with patch('mcps.recipes.database_manager.sqlite3.connect', return_value=mock_conn):
         db_manager = SQLiteDatabaseManager('/mock/path/database.db')
         result = db_manager.connect()
         

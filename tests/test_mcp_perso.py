@@ -8,7 +8,7 @@ from unittest.mock import patch, MagicMock
 # Add the src directory to the path so we can import the modules
 sys.path.insert(0, 'src')
 
-from mcp_server.mcp_perso import handle_initialize, handle_list_tools, handle_call_tool
+from mcps.mcp_server.mcp_perso import handle_initialize, handle_list_tools, handle_call_tool
 
 
 def test_handle_initialize():
@@ -31,9 +31,10 @@ def test_handle_initialize():
     assert "capabilities" in response["result"]
     
     # Check that all expected tools are listed
-    expected_tools = {"calcul", "resume_emails", "marque_recette_faite", "propose_des_recettes"}
+    expected_tools = {"calcul", "resume_emails", "marque_recette_faite", "propose_des_recettes", "prepare_synthese", "gourmandise recette"}
     actual_tools = set(response["result"]["capabilities"]["tools"].keys())
     assert actual_tools == expected_tools
+  
 
 
 def test_handle_list_tools():
@@ -54,11 +55,11 @@ def test_handle_list_tools():
     assert "tools" in response["result"]
     
     # Check that we have the expected number of tools
-    assert len(response["result"]["tools"]) == 4
+    assert len(response["result"]["tools"]) == 6
     
     # Check that each tool has the required fields
     tool_names = {tool["name"] for tool in response["result"]["tools"]}
-    expected_tools = {"calcul", "resume_emails", "marque_recette_faite", "propose_des_recettes"}
+    expected_tools = {"calcul", "resume_emails", "marque_recette_faite", "propose_des_recettes", "prepare_synthese", "gourmandise_recette"}
     assert tool_names == expected_tools
     
     # Check specific tool details

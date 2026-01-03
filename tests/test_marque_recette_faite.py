@@ -6,7 +6,7 @@ from unittest.mock import patch, MagicMock
 # Add the src directory to the path so we can import the modules
 sys.path.insert(0, 'src')
 
-from recipes.marque_recette_faite import marque_recette_faite
+from mcps.recipes.marque_recette_faite import marque_recette_faite
 
 
 def test_marque_recette_faite_success():
@@ -19,16 +19,20 @@ def test_marque_recette_faite_success():
     mock_db_manager.connect.return_value = True
     mock_recipe_manager.update_recipe.return_value = "Test Recipe: Made on 2023-01-01"
     
-    # Patch the imports
-    with patch('recipes.marque_recette_faite.SQLiteDatabaseManager', return_value=mock_db_manager), \
-         patch('recipes.marque_recette_faite.SQLiteRecipeManager', return_value=mock_recipe_manager), \
-         patch('recipes.marque_recette_faite.os.path.expanduser', return_value='/mock/path/recipes.db'):
+    # Patch the imports and datetime
+    with patch('mcps.recipes.marque_recette_faite.SQLiteDatabaseManager', return_value=mock_db_manager), \
+         patch('mcps.recipes.marque_recette_faite.SQLiteRecipeManager', return_value=mock_recipe_manager), \
+         patch('mcps.recipes.marque_recette_faite.os.path.expanduser', return_value='/mock/path/recipes.db'), \
+         patch('mcps.recipes.marque_recette_faite.datetime') as mock_datetime:
+        
+        # Set up the mock datetime to return a fixed date
+        mock_datetime.now.return_value.strftime.return_value = "2026-01-03"
         
         result = marque_recette_faite("Test Recipe")
         
         # Check that the database manager methods were called
         mock_db_manager.connect.assert_called_once()
-        mock_recipe_manager.update_recipe.assert_called_once_with("Test Recipe", MagicMock())
+        mock_recipe_manager.update_recipe.assert_called_once_with("Test Recipe", "2026-01-03")
         mock_db_manager.close.assert_called_once()
         
         # Check the result
@@ -44,8 +48,8 @@ def test_marque_recette_faite_db_connection_failure():
     mock_db_manager.connect.return_value = False
     
     # Patch the imports
-    with patch('recipes.marque_recette_faite.SQLiteDatabaseManager', return_value=mock_db_manager), \
-         patch('recipes.marque_recette_faite.os.path.expanduser', return_value='/mock/path/recipes.db'):
+    with patch('mcps.recipes.marque_recette_faite.SQLiteDatabaseManager', return_value=mock_db_manager), \
+         patch('mcps.recipes.marque_recette_faite.os.path.expanduser', return_value='/mock/path/recipes.db'):
         
         result = marque_recette_faite("Test Recipe")
         
