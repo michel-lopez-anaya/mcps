@@ -10,7 +10,11 @@ Communication via stdio (stdin/stdout) au format JSON‑RPC 2.0.
 """
 import json
 import sys
+import os
 from typing import Any
+
+# Import configuration module
+from mcps.config import get_config_value
 
 # Import helper functions from dedicated modules
 from mcps.email_processing.jsonise import run_jsonise
@@ -30,12 +34,17 @@ def send_message(msg: dict[str, Any]) -> None:
 
 def handle_initialize(request_id: str) -> None:
     """Répond à la requête d'initialisation en listant les capacités."""
+    # Load server configuration from centralized config
+    protocol_version = get_config_value("server.protocolVersion", "2024-11-05")
+    server_name = get_config_value("server.name", "serveur-mcp")
+    server_version = get_config_value("server.version", "1.0.0")
+
     send_message({
         "jsonrpc": "2.0",
         "id": request_id,
         "result": {
-            "protocolVersion": "2024-11-05",
-            "serverInfo": {"name": "serveur-mcp", "version": "1.0.0"},
+            "protocolVersion": protocol_version,
+            "serverInfo": {"name": server_name, "version": server_version},
             "capabilities": {"tools": {"calcul": {}, "resume_emails": {}, "marque_recette_faite": {}, "propose_des_recettes": {}, "prepare_synthese": {}, "gourmandise recette": {}}}
         }
     })
