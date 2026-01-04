@@ -130,18 +130,7 @@ def process_email(message):
     }
     return json.dumps(out, ensure_ascii=False, indent=2)
 
-def load_config():
-    """Charge la configuration depuis le fichier config.yaml."""
-    # Obtenez le répertoire du script actuel
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-    # Construisez le chemin relatif vers config.yaml
-    config_path = os.path.join(script_dir, '..', '..', '..', 'config', 'config.yaml')
-    # config_path = "/home/michel/Desktop/mcps/config/config.yaml"
-    if not os.path.isfile(config_path):
-        return None
-    with open(config_path, 'r') as f:
-        config = yaml.safe_load(f)
-    return config
+
 
 def process_mbox(mbox_path):
     """Traite un fichier mbox et convertit chaque email en JSON."""
@@ -168,7 +157,7 @@ def run_jsonise() -> dict:
         mbox_path = mbox_config.get("path") if isinstance(mbox_config, dict) else None
 
         # Validate that both SRC and path are defined
-        if not mbox_src or not mbox_path:
+        if not (mbox_src and mbox_path):
             return {"error": "SRC ou path non défini"}
 
         mbox_path = os.path.expanduser(mbox_path)
@@ -179,7 +168,7 @@ def run_jsonise() -> dict:
         # Redirige stdout pour capturer l'output
         old_stdout = sys.stdout
         sys.stdout = captured_output = StringIO()
-        process_mbox(mbox_path)
+        process_mbox(f"{mbox_path}/{mbox_src}")
         # Rétablit stdout
         sys.stdout = old_stdout
         prompt = "écrit un résumé de 80 mots pour chacun des emails qui suivent : "
@@ -187,4 +176,4 @@ def run_jsonise() -> dict:
         combined = f"{prompt}\n{output}" if output else prompt
         return {"output": combined}
     except Exception as exc:
-        return {"error": f"exécution échouée : {exc}"}
+        return {"error": f"exécution échouée : {exc} {mbox_src} {mbox_path}"}

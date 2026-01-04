@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 """
-Serveur MCP tâches quotidiennes  :
-* **calcul** – addition de deux nombres
-* **resume_emails** – exécute le script ``jsonise.sh`` via le module ``run_jsonise`` et renvoie le texte préfixé.
-* **marque_recette_faite** – met à jour la date de réalisation d'une recette via le module ``marque_recette_faite``.
-* **propose_des_recettes** – propose des recettes via le module ``propose_des_recettes``.
+Serveur MCP (Model Context Protocol) pour tâches quotidiennes et gestion de recettes.
 
-Communication via stdio (stdin/stdout) au format JSON‑RPC 2.0.
+Ce module implémente un serveur MCP personnel qui fournit les fonctionnalités suivantes :
+
+* **calcul** – Effectue l'addition de deux nombres
+* **resume_emails** – Résume les emails en 80 mots maximum
+* **marque_recette_faite** – Met à jour la date de réalisation d'une recette
+* **propose_des_recettes** – Propose des recettes à partir d'une source donnée
+* **prepare_synthese** – Réalise des synthèses de textes
+* **gourmandise_recette** – Convertit des recettes au format gourmand
+
+Le serveur communique via stdio (stdin/stdout) au format JSON-RPC 2.0 et s'intègre
+avec d'autres modules du projet pour fournir une solution complète de gestion de recettes
+et de traitement de texte.
+
+Configuration centralisée via le module mcps.config.
 """
 import json
 import sys

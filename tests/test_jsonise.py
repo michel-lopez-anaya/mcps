@@ -10,7 +10,7 @@ import sys
 from io import StringIO
 
 # Importez votre module ici
-from mcps.email_processing.jsonise import clean_message, extract_body, clean_body, has_attachment, process_email, load_config, process_mbox, run_jsonise
+from mcps.email_processing.jsonise import clean_message, extract_body, clean_body, has_attachment, process_email, process_mbox, run_jsonise
 
 class TestEmailProcessing(unittest.TestCase):
 
@@ -151,21 +151,7 @@ Ceci est le contenu du message."""
         self.assertEqual(data['date'], 'Mon, 01 Jan 2026 12:00:00 +0000')
         self.assertEqual(data['body'], 'This is the body')
 
-    @patch('builtins.open', new_callable=mock_open, read_data='mbox:\n  path: /test/path')
-    @patch('os.path.isfile', return_value=True)
-    def test_load_config_success(self, mock_isfile, mock_file):
-        """Test du chargement de configuration réussi"""
-        config = load_config()
-        if config != None:
-            self.assertEqual(config['mbox']['path'], '/test/path')
-        else:
-            self.assertFalse
-        mock_file.assert_called_once()
 
-    @patch('os.path.isfile', return_value=False)
-    def test_load_config_not_found(self, mock_isfile):
-        """Test du chargement de configuration échoué"""
-        self.assertEqual(load_config(), None)
 
     @patch('mailbox.mbox')
     @patch('builtins.open', new_callable=mock_open, read_data='mbox:\n  path: /test/path')
@@ -218,7 +204,6 @@ Ceci est le contenu du message."""
             mock_mbox_instance.__iter__.return_value = [msg]
 
             result = run_jsonise()
-
             # Vérifier que le résultat contient la clé 'output'
             self.assertIn('output', result)
             self.assertIn('écrit un résumé de 80 mots', result['output'])
@@ -261,10 +246,12 @@ Ceci est le contenu du message."""
         self.assertNotIn(long_word, data['body'])
         self.assertIn('This is a test message', data['body'])
 
-    @patch('builtins.open', new_callable=mock_open, read_data='mbox:\n  SRC: "test"\n')
-    @patch('os.path.isfile', return_value=True)
-    def test_run_jsonise_missing_config_values(self, mock_isfile, mock_file):
+    @patch('mcps.email_processing.jsonise.get_config_value')
+    def test_run_jsonise_missing_config_values(self, mock_get_config):
         """Test de run_jsonise avec des valeurs de configuration manquantes"""
+        # Mock config with SRC but no path
+        mock_get_config.return_value = {"SRC": "test"}
+
         result = run_jsonise()
 
         self.assertIn('error', result)

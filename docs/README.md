@@ -20,7 +20,6 @@ Gestion et traitement des emails.
     - `clean_body(text)` : Nettoie le texte brut en supprimant les citations et signatures.
     - `has_attachment(message)` : Vérifie si un email contient des pièces jointes.
     - `process_email(message)` : Convertit un email en format JSON.
-    - `load_config()` : Charge la configuration depuis un fichier YAML.
     - `process_mbox(mbox_path)` : Traite un fichier mbox et convertit chaque email en JSON.
     - `run_jsonise()` : Exécute le processus de conversion d'emails en JSON et retourne le résultat.
 

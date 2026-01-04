@@ -80,13 +80,11 @@ class ConfigManager:
                 "path": "~/.local/share/gourmand/recipes.db"
             },
             "mbox": {
-                "path": "~/Mail/ia_raw.mbox"
-            },
-            "scripts": {
-                "jsonise_script": "scripts/jsonise.sh"
+                "SRC": "ia_raw_mbox",
+                "path": "~/Mail"
             },
             "environment": {
-                "DISPLAY": ":0",
+                "DISPLAY": ":1",
                 "XAUTHORITY": "~/.Xauthority",
                 "PATH": "/usr/local/bin:/usr/bin:/bin",
                 "NODE_PATH": "/usr/lib/node_modules"

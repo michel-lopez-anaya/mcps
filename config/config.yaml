@@ -3,5 +3,5 @@ database:
 
 mbox:
   SRC: "ia_raw.mbox"
-  path: "/home/michel/Mail/ia_raw.mbox"
+  path: "/home/michel/Mail"
   
