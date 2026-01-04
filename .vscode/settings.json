@@ -1,3 +1,12 @@
 {
-    "chat.disableAIFeatures": false
+    "chat.disableAIFeatures": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./tests",
+        "-p",
+        "test*.py"
+    ],
+    "python.testing.pytestEnabled": true,
+    "python.testing.unittestEnabled": true 
 }
