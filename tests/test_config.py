@@ -5,19 +5,19 @@ from pathlib import Path
 from unittest.mock import patch, mock_open, MagicMock
 import yaml
 
-from mcps.config import ConfigManager, get_config, get_config_value
+from mcps.utils.config import ConfigManager, get_config, get_config_value
 
 class TestConfigManager(unittest.TestCase):
 
     def setUp(self):
         """Configuration commune pour tous les tests"""
         # Réinitialiser l'instance globale
-        import mcps.config
-        mcps.config._config_manager = None
+        import mcps.utils.config
+        mcps.utils.config._config_manager = None
 
     def test_init_with_config_path(self):
         """Test d'initialisation avec un chemin de configuration spécifié"""
-        with patch('mcps.config.Path') as mock_path:
+        with patch('mcps.utils.config.Path') as mock_path:
             mock_path.return_value.exists.return_value = True
             with patch('builtins.open', mock_open(read_data='test: value')):
                 with patch('yaml.safe_load', return_value={'test': 'value'}):
@@ -41,7 +41,7 @@ class TestConfigManager(unittest.TestCase):
         yaml_data = yaml.dump(config_data)
 
         with patch('builtins.open', mock_open(read_data=yaml_data)):
-            with patch('mcps.config.Path') as mock_path:
+            with patch('mcps.utils.config.Path') as mock_path:
                 mock_path.return_value.exists.return_value = True
                 manager = ConfigManager('/test/config.yaml')
                 loaded_config = manager._load_config()
@@ -49,7 +49,7 @@ class TestConfigManager(unittest.TestCase):
 
     def test_load_config_file_not_exists(self):
         """Test du chargement quand le fichier n'existe pas"""
-        with patch('mcps.config.Path') as mock_path:
+        with patch('mcps.utils.config.Path') as mock_path:
             mock_path.return_value.exists.return_value = False
             manager = ConfigManager('/nonexistent/config.yaml')
             config = manager._load_config()
@@ -60,7 +60,7 @@ class TestConfigManager(unittest.TestCase):
     def test_load_config_invalid_yaml(self):
         """Test du chargement avec YAML invalide"""
         with patch('builtins.open', mock_open(read_data='invalid: yaml: content: [')):
-            with patch('mcps.config.Path') as mock_path:
+            with patch('mcps.utils.config.Path') as mock_path:
                 mock_path.return_value.exists.return_value = True
                 with patch('yaml.safe_load', side_effect=yaml.YAMLError("Invalid YAML")):
                     manager = ConfigManager('/test/config.yaml')
@@ -196,10 +196,10 @@ class TestConfigManager(unittest.TestCase):
     def test_get_config_creates_instance(self):
         """Test que get_config crée une instance globale"""
         # Assurer qu'aucune instance n'existe
-        import mcps.config
-        mcps.config._config_manager = None
+        import mcps.utils.config
+        mcps.utils.config._config_manager = None
 
-        with patch('mcps.config.ConfigManager') as mock_manager_class:
+        with patch('mcps.utils.config.ConfigManager') as mock_manager_class:
             mock_instance = MagicMock()
             mock_manager_class.return_value = mock_instance
 
@@ -209,16 +209,16 @@ class TestConfigManager(unittest.TestCase):
 
     def test_get_config_returns_existing_instance(self):
         """Test que get_config retourne l'instance existante"""
-        import mcps.config
+        import mcps.utils.config
         mock_instance = MagicMock()
-        mcps.config._config_manager = mock_instance
+        mcps.utils.config._config_manager = mock_instance
 
         result = get_config()
         self.assertEqual(result, mock_instance)
 
     def test_get_config_value(self):
         """Test de la fonction get_config_value"""
-        with patch('mcps.config.get_config') as mock_get_config:
+        with patch('mcps.utils.config.get_config') as mock_get_config:
             mock_manager = MagicMock()
             mock_manager.get.return_value = 'test_value'
             mock_get_config.return_value = mock_manager

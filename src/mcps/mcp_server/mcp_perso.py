@@ -23,7 +23,7 @@ import os
 from typing import Any
 
 # Import configuration module
-from mcps.config import get_config_value
+from mcps.utils.config import get_config_value
 
 # Import helper functions from dedicated modules
 from mcps.email_processing.jsonise import run_jsonise
@@ -54,7 +54,7 @@ def handle_initialize(request_id: str) -> None:
         "result": {
             "protocolVersion": protocol_version,
             "serverInfo": {"name": server_name, "version": server_version},
-            "capabilities": {"tools": {"calcul": {}, "resume_emails": {}, "marque_recette_faite": {}, "propose_des_recettes": {}, "prepare_synthese": {}, "gourmandise recette": {}}}
+            "capabilities": {"tools": {"calcul": {}, "resume_emails": {}, "marque_recette_faite": {}, "propose_des_recettes": {}, "prepare_synthese": {}, "gourmandise_recette": {}}}
         }
     })
 

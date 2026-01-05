@@ -5,6 +5,7 @@ import os
 import json
 import tempfile
 import sqlite3
+import subprocess
 from io import StringIO
 from datetime import datetime
 from unittest.mock import patch, MagicMock
@@ -128,22 +129,18 @@ class TestRecipeManagerIntegration:
         """Test le workflow complet de mise à jour d'une recette."""
         # Connexion
         assert self.db_manager.connect() is True
-        
+
         # Mise à jour d'une recette
         result = self.recipe_manager.update_recipe('Recette 1', 'Updated Description')
-        if result == None:
-            assert False
-        else:
-            assert 'Recette 1' in result
-            assert 'Updated Description' in result
-        
+        assert result is not None
+        assert 'Recette 1' in result
+        assert 'Updated Description' in result
+
         # Vérification de la mise à jour
         updated_recipe = self.recipe_manager.get_recipe('Recette 1')
-        if updated_recipe == None:
-            assert False
-        else:
-            assert 'Updated Description' in updated_recipe
-        
+        assert updated_recipe is not None
+        assert 'Updated Description' in updated_recipe
+
         self.db_manager.close()
     
     def test_full_recipe_search_workflow(self):
@@ -166,21 +163,15 @@ class TestRecipeManagerIntegration:
     def test_error_handling_workflow(self):
         """Test la gestion des erreurs dans le workflow."""
         assert self.db_manager.connect() is True
-        
+
         # Test avec une recette inexistante
         result = self.recipe_manager.get_recipe('Recette Inexistante')
-        if result is None:
-            assert True
-        else:
-            assert 'introuvable' in result.lower()
-        
+        assert 'introuvable' in result.lower()
+
         # Test de mise à jour d'une recette inexistante
         result = self.recipe_manager.update_recipe('Recette Inexistante', 'Test')
-        if result is None:
-            assert True
-        else:
-            assert 'introuvable' in result.lower()
-        
+        assert 'introuvable' in result.lower()
+
         self.db_manager.close()
 
 
@@ -366,7 +357,7 @@ class TestMailToJSONIntegration:
         cleaned = clean_message(msg)
         
         # Vérifier que le contenu principal est conservé
-        assert 'Main content' in cleaned or cleaned  # Le contenu principal doit être présent
+        assert 'Main content' in cleaned
         
         # Vérifier que les scripts et styles sont supprimés
         assert 'var x = 1' not in cleaned
@@ -631,5 +622,4 @@ class TestEndToEndWorkflow:
         assert "Carbonara" in recipe_response["result"]["content"][0]["text"]
 
 if __name__ == "__main__":
-    import pytest
-    pytest.main([__file__, "-v"])
+    subprocess.run([sys.executable, "-m", "pytest", __file__, "-v"])

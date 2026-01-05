@@ -3,7 +3,7 @@
 import os
 from mcps.recipes.recipe_manager import SQLiteRecipeManager
 from mcps.recipes.database_manager import SQLiteDatabaseManager
-from mcps.config import get_config_value
+from mcps.utils.config import get_config_value
 
 def propose_des_recettes(source: str, quantite: int) -> str:
     """Propose un nombre défini de recettes à partir d'une source donnée.

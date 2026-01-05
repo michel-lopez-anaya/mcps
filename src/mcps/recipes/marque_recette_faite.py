@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from mcps.recipes.recipe_manager import SQLiteRecipeManager
 from mcps.recipes.database_manager import SQLiteDatabaseManager
-from mcps.config import get_config_value
+from mcps.utils.config import get_config_value
 
 
 def marque_recette_faite(titre: str) -> str:

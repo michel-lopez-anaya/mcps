@@ -8,12 +8,12 @@ from mcps.recipes.database_manager import DatabaseManager
 class RecipeManager:
     """Interface pour la gestion des recettes."""
     @abstractmethod
-    def update_recipe(self, titre: str, description: str) -> Optional[str]:
+    def update_recipe(self, titre: str, description: str) -> str:
         """Met à jour la description d'une recette."""
         pass
 
     @abstractmethod
-    def get_recipe(self, titre: str) -> Optional[str]:
+    def get_recipe(self, titre: str) -> str:
         """Récupère une recette par son titre."""
         pass
 
@@ -29,7 +29,7 @@ class SQLiteRecipeManager(RecipeManager):
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
 
-    def update_recipe(self, titre: str, description: str) -> Optional[str]:
+    def update_recipe(self, titre: str, description: str) -> str:
         """Met à jour la description d'une recette."""
         try:
             self.db_manager.execute_query(
@@ -48,7 +48,7 @@ class SQLiteRecipeManager(RecipeManager):
         except Exception as e:
             return f"Erreur lors de la mise à jour: {e}"
 
-    def get_recipe(self, titre: str) -> Optional[str]:
+    def get_recipe(self, titre: str) -> str:
         """Récupère une recette par son titre."""
         try:
             row = self.db_manager.execute_query(

@@ -7,7 +7,7 @@ import sys
 import re
 from lxml import html as lxml_html
 from lxml.html.clean import Cleaner
-from mcps.config import get_config_value
+from mcps.utils.config import get_config_value
 
 def clean_message(message):
     # -------------------------------------------------
