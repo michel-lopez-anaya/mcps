@@ -120,8 +120,10 @@ def process_email(message):
     """Process an email message and return its JSON representation."""
     body_raw = extract_body(message)
     body_clean = clean_body(body_raw)
-    body_clean = re.sub(r'(?<!\S)[^\s]{' + str(15 + 1) + r',}(?!\S)', '', body_clean)  # Remove multiple spaces left by long word removal
-    body_clean = re.sub(r' +', ' ', body_clean)
+    body_clean = re.sub(r'(?<!\S)[^\s]{' + str(15 + 1) + r',}(?!\S)', '', body_clean)  
+    body_clean = re.sub(r'[^\x00-\xFF]', '', body_clean) # supprime tous les caractères spéciaux 
+    body_clean = re.sub(r'[\n\xa0]', '.', body_clean)
+    body_clean = re.sub(r' +', ' ', body_clean) # Remove multiple spaces left by long word removal
     out = {
         "from": message.get("From"),
         "subject": message.get("Subject"),
