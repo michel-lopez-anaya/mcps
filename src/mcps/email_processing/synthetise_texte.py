@@ -21,7 +21,7 @@ L'objectif est de permettre au lecteur de comprendre rapidement le contenu du te
 - Hiérachie des sections numérotées I, II, III, ...
 - Les titres de niveau 2 seront introduit par un point
 
-Écris un synthèse du texte qui suit :
+Tu écriras une synthèse du texte que cet outils te fourniras dans sa réponse.
 
 """
 

@@ -4,6 +4,7 @@ Module de configuration centralisée pour le projet MCP.
 Permet de charger et gérer la configuration depuis différents sources.
 """
 
+import logging
 import os
 import yaml
 from pathlib import Path
@@ -27,22 +28,25 @@ class ConfigManager:
     def _find_config_file(self) -> Optional[str]:
         """
         Trouve le fichier de configuration dans les emplacements par défaut.
-        
+
         Returns
         -------
         str or None
             Chemin vers le fichier de configuration trouvé, ou None si non trouvé.
         """
+        logging.info(f"Current working directory: {Path.cwd()}")
         # Emplacements par défaut à chercher
         default_paths = [
             Path.cwd() / "config" / "config.yaml",
             Path.cwd() / "config.yaml",
             Path.home() / ".config" / "mcps" / "config.yaml",
             Path.home() / ".mcps" / "config.yaml",
+            Path.home() / "Desktop" / "mcps" / "config" / "config.yaml",
         ]
         
         for path in default_paths:
             if path.exists():
+                logging.info(f"Found config file at: {path}")
                 return str(path)
         
         return None
@@ -63,7 +67,7 @@ class ConfigManager:
             with open(self.config_path, 'r', encoding='utf-8') as f:
                 return yaml.safe_load(f) or {}
         except Exception as e:
-            print(f"⚠️  Erreur lors du chargement de la configuration: {e}")
+            logging.info(f"⚠️  Erreur lors du chargement de la configuration: {e}")
             return self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
@@ -194,4 +198,4 @@ def get_config_value(key_path: str, default: Any = None) -> Any:
 
 # Exemple d'utilisation :
 # db_path = get_config_value("database.path", "~/.local/share/gourmand/recipes.db")
-# env_vars = get_config().get_environment_vars()
+# env_vars = get_config().get_environment_vars()    return get_config().get(key_path, default)

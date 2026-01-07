@@ -24,10 +24,13 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 │       │   ├── propose_des_recettes.py # Propose des recettes
 │       │   └── recipe_manager.py   # Gestion des recettes
 │       └── utils/
+│           ├── config.py           # Gestion centralisée de la configuration
 │           └── send_clipboard.py  # Utilitaires pour le presse-papiers
 ├── README.md                 # Documentation du projet
 ├── requirements.txt         # Dépendances Python
-└── todo.md                  # Liste des tâches et améliorations
+├── test-requirements.txt    # Dépendances pour les tests
+├── todo.md                  # Liste des tâches et améliorations
+└── tests/                   # Tests unitaires et d'intégration
 ```
 
 ## Fonctionnalités

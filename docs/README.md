@@ -85,6 +85,13 @@ Gestion des recettes.
 #### **`utils/`**
 Utilitaires divers.
 
+- **`config.py`**
+  - **Classes** :
+    - `ConfigManager` : Gestionnaire centralisé de configuration avec chargement depuis YAML.
+  - **Fonctions** :
+    - `get_config()` : Récupère l'instance globale du gestionnaire de configuration.
+    - `get_config_value(key_path, default)` : Récupère une valeur de configuration spécifique.
+
 - **`send_clipboard.py`**
   - **Fonction** :
     - `recuperer_texte_du_presse_papier()` : Récupère le texte du presse-papiers.

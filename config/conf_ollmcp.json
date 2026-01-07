@@ -7,12 +7,22 @@
         "mcps.mcp_server.mcp_perso",
         "/home/michel/Desktop/"
       ],
+      "cwd": "/home/michel/Desktop/mcps",
       "env": {
         "DISPLAY": ":1",
         "XAUTHORITY": "/home/michel/.Xauthority",
-        "PATH": "/bin:/usr/bin:/usr/local/bin",
-        "NODE_PATH": "/usr/bin:/usr/share/node_modules"
-      }
+        "PATH": "/home/michel/.venv/bin:/usr/local/bin:/usr/bin:/bin",
+        "VIRTUAL_ENV": "/home/michel/.venv",
+        "PYTHONPATH": "/home/michel/Desktop/mcps/src"
+      },
+      "timeout": 30,
+      "autoApprove": [
+        "calcul",
+        "resume_emails",
+        "marque_recette_faite",
+        "prepare_synthese",
+        "gourmandise_recette"
+      ]
     }
   }
 }

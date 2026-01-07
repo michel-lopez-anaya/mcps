@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Module providing the DatabaseManager interface and its implementation."""
+import logging
 from typing import List, Optional, Any
 from abc import ABC, abstractmethod
 import sqlite3
@@ -41,7 +42,7 @@ class SQLiteDatabaseManager(DatabaseManager):
             self.conn = sqlite3.connect(self.db_path)
             return True
         except Exception as e:
-            print(f"Erreur dlors de la connexion à la base de données: {e}")
+            logging.info(f"Erreur dlors de la connexion à la base de données: {e} ")
             return False
 
     def execute_query(self, query: str, params: tuple = ()) -> List[Any]:

@@ -17,9 +17,17 @@ et de traitement de texte.
 
 Configuration centralisée via le module mcps.config.
 """
+import logging
+import os
+
+logging.basicConfig(
+    filename=os.path.expanduser("~/Desktop/mcp_perso.log"),
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+
 import json
 import sys
-import os
 from typing import Any
 
 # Import configuration module
@@ -42,9 +50,8 @@ def send_message(msg: dict[str, Any]) -> None:
         sys.stdout.write("\n")
         sys.stdout.flush()
     except Exception as e:
-        # Log error to stderr to avoid interfering with stdout communication
-        print(f"Error sending message: {e}", file=sys.stderr)
-        sys.stderr.flush()
+        # Log error to file
+        logging.info(f"Error sending message: {e}")
 
 def handle_initialize(request_id: str) -> None:
     """Répond à la requête d'initialisation en listant les capacités."""

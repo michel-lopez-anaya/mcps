@@ -24,7 +24,7 @@ Ce répertoire contient les tests pour l'application MCP Personnelle.
 - `test_mcp_perso.py` - Tests unitaires pour le serveur MCP (2 tests)
   - Tests d'initialisation et de liste des outils
 
-### Tests d'Intégration (nouveau)
+### Tests d'Intégration (19 tests)
 - `test_integration.py` - Tests d'intégration complets couvrant :
 
 #### Classes de Test

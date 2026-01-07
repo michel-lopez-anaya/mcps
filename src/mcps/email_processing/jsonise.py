@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 import mailbox
 import yaml
 import json
@@ -137,7 +138,7 @@ def process_email(message):
 def process_mbox(mbox_path):
     """Traite un fichier mbox et convertit chaque email en JSON."""
     if not os.path.isfile(mbox_path):
-        print(f"Erreur : pas de mbox à {mbox_path}")
+        logging.info(f"Erreur : pas de mbox à {mbox_path}")
         sys.exit(1)
     mbox = mailbox.mbox(mbox_path)
     for message in mbox:

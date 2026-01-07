@@ -251,4 +251,4 @@ class TestExempleIntegration:
 
 ---
 
-**Dernière mise à jour** : 2026-01-03
+**Dernière mise à jour** : 2026-07-01
