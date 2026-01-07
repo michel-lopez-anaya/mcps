@@ -6,6 +6,6 @@ mbox:
   path: "/home/michel/Mail"
   
 server:
-  protocolVersion: "2024-11-0)"
+  protocolVersion: "2024-11-05"
   name: "perso"
   version: "1.0.2"

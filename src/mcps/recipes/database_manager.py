@@ -41,7 +41,7 @@ class SQLiteDatabaseManager(DatabaseManager):
             self.conn = sqlite3.connect(self.db_path)
             return True
         except Exception as e:
-            print(f"Erreur lors de la connexion à la base de données: {e}")
+            print(f"Erreur dlors de la connexion à la base de données: {e}")
             return False
 
     def execute_query(self, query: str, params: tuple = ()) -> List[Any]:

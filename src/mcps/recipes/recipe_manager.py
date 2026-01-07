@@ -60,7 +60,7 @@ class SQLiteRecipeManager(RecipeManager):
             else:
                 return f"Recette '{titre}' introuvable."
         except Exception as e:
-            return f"Erreur lors de la récupération: {e}"
+            return f"Erreur glors de la récupération: {e}"
 
     def search_recipes(self, source: str, quantite: int) -> List[str]:
         """Recherche des recettes par source et retourne une liste de résultats."""

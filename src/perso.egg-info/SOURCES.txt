@@ -1,11 +1,7 @@
 LICENSE
 README.md
-setup.py
+pyproject.toml
 src/mcps/__init__.py
-src/mcps.egg-info/PKG-INFO
-src/mcps.egg-info/SOURCES.txt
-src/mcps.egg-info/dependency_links.txt
-src/mcps.egg-info/top_level.txt
 src/mcps/email_processing/__init__.py
 src/mcps/email_processing/jsonise.py
 src/mcps/email_processing/synthetise_texte.py
@@ -17,6 +13,12 @@ src/mcps/recipes/gourmandise_recette.py
 src/mcps/recipes/marque_recette_faite.py
 src/mcps/recipes/propose_des_recettes.py
 src/mcps/recipes/recipe_manager.py
+src/mcps/utils/config.py
+src/mcps/utils/send_clipboard.py
+src/perso.egg-info/PKG-INFO
+src/perso.egg-info/SOURCES.txt
+src/perso.egg-info/dependency_links.txt
+src/perso.egg-info/top_level.txt
 tests/test_config.py
 tests/test_database_manager.py
 tests/test_integration.py

@@ -37,9 +37,14 @@ from mcps.utils.send_clipboard import recuperer_texte_du_presse_papier
 
 def send_message(msg: dict[str, Any]) -> None:
     """Envoie un message JSON au client via stdout."""
-    json.dump(msg, sys.stdout)
-    sys.stdout.write("\n")
-    sys.stdout.flush()
+    try:
+        json.dump(msg, sys.stdout, ensure_ascii=False)
+        sys.stdout.write("\n")
+        sys.stdout.flush()
+    except Exception as e:
+        # Log error to stderr to avoid interfering with stdout communication
+        print(f"Error sending message: {e}", file=sys.stderr)
+        sys.stderr.flush()
 
 def handle_initialize(request_id: str) -> None:
     """Répond à la requête d'initialisation en listant les capacités."""
@@ -54,7 +59,16 @@ def handle_initialize(request_id: str) -> None:
         "result": {
             "protocolVersion": protocol_version,
             "serverInfo": {"name": server_name, "version": server_version},
-            "capabilities": {"tools": {"calcul": {}, "resume_emails": {}, "marque_recette_faite": {}, "propose_des_recettes": {}, "prepare_synthese": {}, "gourmandise_recette": {}}}
+            "capabilities": {
+                "tools": {
+                    "calcul": {},
+                    "resume_emails": {},
+                    "marque_recette_faite": {},
+                    "propose_des_recettes": {},
+                    "prepare_synthese": {},
+                    "gourmandise_recette": {}
+                }
+            }
         }
     })
 
@@ -79,7 +93,7 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "resume_emails",
-                    "description": "Lit les emails et résume chacun des emails qui suivent en 80 mots maximum.",
+                    "description": "Lit les emails et renvoie les emails pour que tu les résumes en 80 mots maximum.",
                     "inputSchema": {"type": "object", "properties": {}, "required": []}
                 },
                 {
@@ -133,49 +147,84 @@ def handle_call_tool(request_id: str, params: dict) -> None:
             "result": {"content": [{"type": "text", "text": f"Le résultat de {a} + {b} = {resultat}"}]}
         })
     elif tool_name == "resume_emails":
-        result = run_jsonise()
-        send_message({
-            "jsonrpc": "2.0",
-            "id": request_id,
-            "result": {"content": [{"type": "text", "text": result.get("output", "")}]}
-        })
+        try:
+            result = run_jsonise()
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {"content": [{"type": "text", "text": result.get("output", "")}]}
+            })
+        except Exception as e:
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32603, "message": str(e)}
+            })
     elif tool_name == "marque_recette_faite":
-        titre = arguments.get("titre")
-        if not titre:
-            result_text = "Veuillez spécifier le titre de la recette."
-        else:
-            result_text = marque_recette_faite(titre)
-        send_message({
-            "jsonrpc": "2.0",
-            "id": request_id,
-            "result": {"content": [{"type": "text", "text": result_text}]}
-        })
+        try:
+            titre = arguments.get("titre")
+            if not titre:
+                result_text = "Veuillez spécifier le titre de la recette."
+            else:
+                result_text = marque_recette_faite(titre)
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {"content": [{"type": "text", "text": result_text}]}
+            })
+        except Exception as e:
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32603, "message": str(e)}
+            })
     elif tool_name == "propose_des_recettes":
-        source = arguments.get("source")
-        quantite = arguments.get("quantite")
-        if not source or quantite is None:
-            result_text = "Veuillez spécifier la source et la quantité de recettes."
-        else:
-            result_text = propose_des_recettes(source, quantite)
-        send_message({
-            "jsonrpc": "2.0",
-            "id": request_id,
-            "result": {"content": [{"type": "text", "text": result_text}]}
-        })
+        try:
+            source = arguments.get("source")
+            quantite = arguments.get("quantite")
+            if not source or quantite is None:
+                result_text = "Veuillez spécifier la source et la quantité de recettes."
+            else:
+                result_text = propose_des_recettes(source, quantite)
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {"content": [{"type": "text", "text": result_text}]}
+            })
+        except Exception as e:
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32603, "message": str(e)}
+            })
     elif tool_name == "prepare_synthese":
-        contexte_a_etablir = recuperer_texte_du_presse_papier()
-        send_message({
-            "jsonrpc": "2.0",
-            "id": request_id,
-            "result": {"content": [{"type": "text", "text": contexte_a_etablir}]}
-        })
+        try:
+            contexte_a_etablir = recuperer_texte_du_presse_papier()
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {"content": [{"type": "text", "text": contexte_a_etablir}]}
+            })
+        except Exception as e:
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32603, "message": str(e)}
+            })
     elif tool_name == "gourmandise_recette":
-        contexte_a_etablir = recuperer_texte_du_presse_papier()
-        send_message({
-            "jsonrpc": "2.0",
-            "id": request_id,
-            "result": {"content": [{"type": "text", "text": contexte_a_etablir}]}
-        })
+        try:
+            contexte_a_etablir = recuperer_texte_du_presse_papier()
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "result": {"content": [{"type": "text", "text": contexte_a_etablir}]}
+            })
+        except Exception as e:
+            send_message({
+                "jsonrpc": "2.0",
+                "id": request_id,
+                "error": {"code": -32603, "message": str(e)}
+            })
     else:
         send_message({
             "jsonrpc": "2.0",
@@ -185,28 +234,61 @@ def handle_call_tool(request_id: str, params: dict) -> None:
 
 def main() -> None:
     """Boucle principale du serveur – lit les requêtes JSON sur stdin."""
-    for line in sys.stdin:
+    try:
+        for line in sys.stdin:
+            try:
+                message = json.loads(line)
+            except json.JSONDecodeError:
+                # Send error response for invalid JSON
+                send_message({
+                    "jsonrpc": "2.0",
+                    "id": None,
+                    "error": {"code": -32700, "message": "Parse error"}
+                })
+                continue
+            
+            method = message.get("method")
+            request_id = message.get("id")
+            params = message.get("params", {})
+            
+            try:
+                if method == "initialize":
+                    handle_initialize(request_id)
+                elif method == "tools/list":
+                    handle_list_tools(request_id)
+                elif method == "tools/call":
+                    handle_call_tool(request_id, params)
+                elif method == "notifications/initialized":
+                    pass
+                elif method == "shutdown":
+                    send_message({"jsonrpc": "2.0", "id": request_id, "result": {}})
+                elif method == "exit":
+                    break
+                else:
+                    send_message({
+                        "jsonrpc": "2.0",
+                        "id": request_id,
+                        "error": {"code": -32601, "message": f"Méthode inconnue: {method}"}
+                    })
+            except Exception as e:
+                # Handle unexpected errors in method processing
+                send_message({
+                    "jsonrpc": "2.0",
+                    "id": request_id,
+                    "error": {"code": -32603, "message": f"Internal error: {str(e)}"}
+                })
+    except Exception as e:
+        # Handle fatal errors in main loop
+        error_msg = {
+            "jsonrpc": "2.0",
+            "id": None,
+            "error": {"code": -32603, "message": f"Fatal server error: {str(e)}"}
+        }
         try:
-            message = json.loads(line)
-        except json.JSONDecodeError:
-            continue
-        method = message.get("method")
-        request_id = message.get("id")
-        params = message.get("params", {})
-        if method == "initialize":
-            handle_initialize(request_id)
-        elif method == "tools/list":
-            handle_list_tools(request_id)
-        elif method == "tools/call":
-            handle_call_tool(request_id, params)
-        elif method == "notifications/initialized":
-            pass
-        else:
-            send_message({
-                "jsonrpc": "2.0",
-                "id": request_id,
-                "error": {"code": -32601, "message": f"Méthode inconnue: {method}"}
-            })
+            send_message(error_msg)
+        except:
+            pass  # Ignore errors when sending fatal error message
+        sys.exit(1)
 
 if __name__ == "__main__":
     main()
