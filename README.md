@@ -63,7 +63,7 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
    cd mcps
    créer un environnement virtuel pour ce projet
    python3 -m venv ~/.venv
-   activer l’environnement 
+   activer l’environnement
    source ~/.venv/bin/activate
    ```
 
@@ -74,12 +74,21 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 
 3. Configurez les fichiers de configuration :
    - Modifiez `config/config.yaml` selon vos besoins.
+   - **Important** : Vous devez personnaliser le fichier `config/conf_ollmcp.json` en fonction du répertoire où vous installez le serveur. Mettez à jour les chemins d'accès dans ce fichier pour qu'ils correspondent à votre environnement local.
 
 4. Exécutez le serveur MCP :
    ```bash
    copier la configuration du serveur dans "conf_ollmcp.json" dans la configuration des serveurs de ollmcp, gemini cli, etc
    lancer ollmcp, gemini cli, etc
    ```
+
+## Notes importantes
+
+- **Base de données** : Ce projet utilise une base de données au format du logiciel libre Gourmand. La base de données n'est pas fournie avec ce projet et doit être obtenue séparément.
+
+- **Gestion des emails** : Le serveur s'attend à trouver les emails dans un fichier au format mbox. Ce fichier doit contenir un nombre limité de mails, typiquement les nouveaux de la journée. L'utilisation de fichiers contenant trop d'emails peut saturer l'IA qui les traitera. D'autres formats de mail n'ont pas été testés.
+
+- **Compatibilité** : Ce serveur a été testé uniquement sous Debian 13. Il peut fonctionner sur d'autres distributions Linux, mais cela n'a pas été vérifié.
 
 ## Contribution
 
