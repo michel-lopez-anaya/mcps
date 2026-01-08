@@ -72,25 +72,16 @@ cat > config/config.yaml << 'EOF'
 
 database:
   # Chemin vers la base de données Gourmand
-  # Laissez vide pour utiliser le chemin par défaut
-  path: ""
+  path: "/home/courses/.local/share/gourmand/recipes.db"
 
 mbox:
-  # Chemin vers le fichier mbox pour les emails
-  # Laissez vide pour utiliser le chemin par défaut
-  path: ""
+  SRC: "ia_raw.mbox"
+  path: "/home/michel/Mail"
 
-# Configuration des scripts (si utilisés)
-scripts:
-  jsonise_script: "scripts/jsonise.sh"
-
-# Configuration de l'environnement
-environment:
-  # Ces valeurs seront utilisées par le serveur MCP
-  DISPLAY: ":0"
-  XAUTHORITY: "~/.Xauthority"
-  PATH: "/usr/local/bin:/usr/bin:/bin"
-  NODE_PATH: "/usr/lib/node_modules"
+server:
+  protocolVersion: "2024-11-05"
+  name: "perso"
+  version: "1.3.0"
 EOF
 
 echo "✅ Fichier de configuration créé: config/config.yaml"
@@ -102,17 +93,28 @@ cat > config/conf_ollmcp.json << 'EOF'
 {
   "mcpServers": {
     "perso": {
-      "command": "python3",
+      "command": "/home/michel/.venv/bin/python3",
       "args": [
-        "-m", 
-        "mcps.mcp_server.mcp_perso"
+        "-m",
+        "mcps.mcp_server.mcp_perso",
+        "/home/michel/Desktop/"
       ],
+      "cwd": "/home/michel/Desktop/mcps",
       "env": {
-        "DISPLAY": ":0",
-        "XAUTHORITY": "~/.Xauthority",
-        "PATH": "/usr/local/bin:/usr/bin:/bin",
-        "NODE_PATH": "/usr/lib/node_modules"
-      }
+        "DISPLAY": ":1",
+        "XAUTHORITY": "/home/michel/.Xauthority",
+        "PATH": "/home/michel/.venv/bin:/usr/local/bin:/usr/bin:/bin",
+        "VIRTUAL_ENV": "/home/michel/.venv",
+        "PYTHONPATH": "/home/michel/Desktop/mcps/src"
+      },
+      "timeout": 30,
+      "autoApprove": [
+        "calcul",
+        "resume_emails",
+        "marque_recette_faite",
+        "prepare_synthese",
+        "gourmandise_recette"
+      ]
     }
   }
 }
@@ -121,57 +123,17 @@ EOF
 echo "✅ Fichier de configuration MCP créé: config/conf_ollmcp.json"
 echo
 
-# Créer un script de démarrage
-echo "🚀 Création du script de démarrage..."
-cat > start.sh << 'EOF'
-#!/bin/bash
-
-# Script de démarrage du serveur MCP
-
-# Activer l'environnement virtuel
-if [ -d ".venv" ]; then
-    source .venv/bin/activate
-    echo "✅ Environnement virtuel activé"
-fi
-
-# Démarrer le serveur MCP
-echo "🚀 Démarrage du serveur MCP..."
-python3 -m mcps.mcp_server.mcp_perso
-EOF
-
-chmod +x start.sh
-echo "✅ Script de démarrage créé: start.sh"
-echo
-
-# Créer un script de test
-echo "🧪 Création du script de test..."
-cat > test.sh << 'EOF'
-#!/bin/bash
-
-# Script de test du projet
-
-# Activer l'environnement virtuel
-if [ -d ".venv" ]; then
-    source .venv/bin/activate
-fi
-
-echo "🧪 Exécution des tests..."
-python3 -m pytest tests/ -v
-EOF
-
-chmod +x test.sh
-echo "✅ Script de test créé: test.sh"
-echo
-
 echo "🎉 Installation terminée avec succès !"
 echo
 echo "📋 Prochaines étapes :"
 echo "1. Modifiez config/config.yaml selon vos besoins"
 echo "2. Assurez-vous que les chemins vers la base de données et les fichiers mbox sont corrects"
-echo "3. Exécutez './start.sh' pour démarrer le serveur MCP"
-echo "4. Exécutez './test.sh' pour lancer les tests"
+echo "3. Copiez config/conf_ollmcp.json dans la configuration de votre client MCP (ollmcp, cline, etc.)"
+echo "4. Lancez votre client MCP pour utiliser le serveur"
 echo
 echo "💡 Conseils :"
 echo "- Le serveur MCP communiquera via stdio (JSON-RPC 2.0)"
-echo "- Vous devez configurer ollmcp, gemini cli ou d'autres clients MCP pour utiliser ce serveur"
+echo "- Vous devez configurer ollmcp, cline ou d'autres clients MCP pour utiliser ce serveur"
 echo "- Consultez le README.md pour plus de détails sur l'utilisation"
+echo "- Pour exécuter les tests : python3 -m pytest tests/ -v"
+echo "- Pour démarrer manuellement : python3 -m mcps.mcp_server.mcp_perso"

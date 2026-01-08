@@ -78,8 +78,8 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 
 4. Exécutez le serveur MCP :
    ```bash
-   copier la configuration du serveur dans "conf_ollmcp.json" dans la configuration des serveurs de ollmcp, gemini cli, etc
-   lancer ollmcp, gemini cli, etc
+   copier la configuration du serveur dans "conf_ollmcp.json" dans la configuration des serveurs de ollmcp, cline, etc
+   lancer ollmcp, cline, etc
    ```
 
 ## Notes importantes
