@@ -50,10 +50,10 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
 - **`mcp_perso.py`** : Serveur MCP principal qui fournit les outils suivants :
   - **`calcul`** : Additionne deux nombres.
   - **`resume_emails`** : Exécute le script `mail_to_json.py` et résume les emails.
-  - **`marque_recette_faite`** : Met à jour la date de réalisation d'une recette.
-  - **`propose_des_recettes`** : Propose des recettes.
-  - **`prepare_synthese`** : Établit un contexte pour réaliser des synthèses de textes.
-  - **`gourmandise_recette`** : Établit un contexte pour convertir des recettes au format gourmand.
+  - **`marque_recette_faite`** : Met à jour la date de réalisation d'une recette. Attend le titre exact de la recette dans la base de données et inscrit la date du jour dans l'enregistrement.
+  - **`propose_des_recettes`** : Propose des recettes. Attend deux paramètres : le nombre de recettes attendues et la source d'origine (ex : marmiton, diner, etc.). Les recettes apparaissent dans l'ordre de leur dernière confection.
+  - **`prepare_synthese`** : Établit un contexte pour réaliser des synthèses de textes. Travaille sur le texte présent dans le clipboard obtenu en sélectionnant du texte avec la souris.
+  - **`gourmandise_recette`** : Établit un contexte pour convertir des recettes au format gourmand. Travaille sur le texte présent dans le clipboard obtenu en sélectionnant du texte avec la souris.
 
 ## Installation
 
@@ -71,6 +71,12 @@ Ce projet est un serveur MCP (Multi-Tool Controller) conçu pour automatiser des
    ```bash
    pip install -r requirements.txt
    ```
+
+3. Installez la commande `xclip` (nécessaire pour le presse-papiers) :
+   ```bash
+   sudo apt-get install xclip
+   ```
+   **Note** : Le script d'installation ne gère pas cette dépendance système. C'est à l'utilisateur de l'installer manuellement.
 
 3. Configurez les fichiers de configuration :
    - Modifiez `config/config.yaml` selon vos besoins.

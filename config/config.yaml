@@ -1,10 +1,14 @@
+# Configuration du projet MCP
+# Modifiez ces valeurs selon votre environnement
+
 database:
+  # Chemin vers la base de données Gourmand
   path: "/home/courses/.local/share/gourmand/recipes.db"
 
 mbox:
   SRC: "ia_raw.mbox"
   path: "/home/michel/Mail"
-  
+
 server:
   protocolVersion: "2024-11-05"
   name: "perso"

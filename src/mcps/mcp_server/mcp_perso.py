@@ -126,7 +126,8 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "prepare_synthese",
-                    "description": f"Réalise, prépare, fait, écrit des synthèses de textes. {PROMPT_SYNTHESE}",
+                    "description": f"Cet outils te transmets maintenant le texte d’un article pour \
+                        que tu en fasses une synthèse et l’affiche. {PROMPT_SYNTHESE}",
                     "inputSchema": {"type": "object", "properties": {}, "required": []}
                 },
                 {
@@ -210,8 +211,11 @@ def handle_call_tool(request_id: str, params: dict) -> None:
             send_message({
                 "jsonrpc": "2.0",
                 "id": request_id,
-                "result": {"content": [{"type": "text", "text": contexte_a_etablir}]}
-            })
+                "result": {"content": [
+                    {"type": "text", 
+                     "text": f"{{ '**OBJECTIF**': 'fait une synthèse du texte suivant et affiche la : ', '**TEXTE CIBLE**': {contexte_a_etablir}}}"}
+                ]}
+            })        
         except Exception as e:
             send_message({
                 "jsonrpc": "2.0",
