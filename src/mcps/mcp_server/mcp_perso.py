@@ -114,7 +114,7 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "propose_des_recettes",
-                    "description": "Propose un nombre défini de recettes d'une source donnée.",
+                    "description": "Propose un nombre défini de recettes d'une source donnée. Ne modifie pas les titres reçus.",
                     "inputSchema": {
                         "type": "object",
                         "properties": {
