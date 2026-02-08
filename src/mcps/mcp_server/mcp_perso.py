@@ -105,7 +105,7 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "marque_recette_faite",
-                    "description": "Met à jour le champ description d'une recette.",
+                    "description": "Met à jour le champ description d'une recette. Reçoit un titre de recette qu’il ne faut pas modifier, même au niveau de la casse.",
                     "inputSchema": {
                         "type": "object",
                         "properties": {"titre": {"type": "string", "description": "Titre de la recette"}},
@@ -114,7 +114,7 @@ def handle_list_tools(request_id: str) -> None:
                 },
                 {
                     "name": "propose_des_recettes",
-                    "description": "Propose un nombre défini de recettes d'une source donnée. Ne modifie pas les titres reçus.",
+                    "description": "Propose un nombre défini de recettes d'une source donnée. Ne modifie pas la casse des titres reçus.",
                     "inputSchema": {
                         "type": "object",
                         "properties": {
