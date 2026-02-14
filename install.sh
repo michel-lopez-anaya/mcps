@@ -81,7 +81,7 @@ mbox:
 server:
   protocolVersion: "2024-11-05"
   name: "perso"
-  version: "1.3.0"
+  version: "1.3.3"
 EOF
 
 echo "✅ Fichier de configuration créé: config/config.yaml"
