@@ -21,7 +21,7 @@ import logging
 import os
 
 logging.basicConfig(
-    filename=os.path.expanduser("~/Desktop/mcp_perso.log"),
+    filename=os.path.expanduser("~/mcp_perso.log"),
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )

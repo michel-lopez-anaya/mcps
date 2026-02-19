@@ -40,11 +40,13 @@ class ConfigManager:
             Path.cwd() / "config" / "config.yaml",
             Path.cwd() / "config.yaml",
             Path.home() / ".config" / "mcps" / "config.yaml",
+            Path.home() / ".local" / "bin" / "mcps" / "config" / "config.yaml",
             Path.home() / ".mcps" / "config.yaml",
             Path.home() / "Desktop" / "mcps" / "config" / "config.yaml",
         ]
         
         for path in default_paths:
+            logging.info(f"Search config file at: {path}")
             if path.exists():
                 logging.info(f"Found config file at: {path}")
                 return str(path)
